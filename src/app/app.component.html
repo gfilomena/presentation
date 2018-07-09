@@ -1,0 +1,63 @@
+<mat-toolbar color="primary">
+  <span>2. Presentation: Data Card</span>
+</mat-toolbar>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<mat-sidenav-container (backdropClick)="sidenav.close()">
+  <mat-sidenav class="sidebar" #sidenav (keydown.escape)="sidenav.close()" disableClose>
+    <div class="close">
+      <button mat-raised-button color="warn" (click)="sidenav.close()">Close</button>
+    </div>
+
+    <div *ngFor="let item of filters">
+      <mat-checkbox [(ngModel)]="item.enabled" (ngModelChange)="toggle(item.id, $event)">{{item.name}}</mat-checkbox>
+    </div>
+    <mat-form-field class="limitsize">
+      <input matInput type="number" placeholder="Results limit" (keydown)="changelimit($event)" [(ngModel)]="limit" min="40">
+    </mat-form-field>
+    <h3 color="message">{{message}}</h3>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <button class="filterbar" mat-raised-button color="primary" (click)="sidenav.open()">Filterbar</button>
+
+    <div class="flex-container" fxflex>
+
+      <div class="card-container" *ngFor="let item of dataSource | slice:0:size">
+        <mat-card class="card">
+          <mat-card-header>
+
+            <mat-card-title *ngIf="filter['country']">Country or Area:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['country']">{{item.country}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['year']">Year:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['year']">{{item.year}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['area']">Area:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['area']">{{item.area}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['sex']">Sex:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['sex']">{{item.sex}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['recordtype']">Record Type:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['recordtype']">{{item.recordtype}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['reliability']">Reliability:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['reliability']">{{item.reliability}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['sourceyear']">Source Year:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['sourceyear']">{{item.sourceyear}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['value']">Value:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['value']">{{item.value}}</mat-card-subtitle>
+
+            <mat-card-title *ngIf="filter['valuefootnotes']">Value Footnotes:</mat-card-title>
+            <mat-card-subtitle *ngIf="filter['valuefootnotes']">{{item.valuefootnotes}}</mat-card-subtitle>
+
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
